@@ -6,13 +6,19 @@ import { SITE_NAME, TAGLINE, TAGLINE_SUB } from "@/lib/config";
 
 export default function Hero() {
   return (
-    <section className="relative flex min-h-screen flex-col items-center justify-center gap-8 overflow-hidden px-6 pt-28 pb-16 text-center sm:gap-10">
+    <section className="relative flex min-h-screen flex-col items-center justify-center gap-6 overflow-hidden px-6 pt-24 pb-16 text-center sm:gap-8">
       <ThreeVoidBackground />
 
-      <Logo className="h-24 w-24 sm:h-32 sm:w-32" glitch priority sizes="(min-width: 640px) 128px, 96px" />
+      <Logo
+        variant="wide"
+        className="w-[88vw] max-w-xl sm:max-w-2xl lg:max-w-3xl"
+        glitch
+        priority
+        sizes="(min-width: 1024px) 768px, (min-width: 640px) 640px, 88vw"
+      />
 
       <div className="flex flex-col items-center gap-4">
-        <h1 className="font-display text-5xl leading-none tracking-[0.04em] text-ghost sm:text-7xl md:text-8xl">
+        <h1 className="font-display text-xl tracking-[0.35em] text-ghost sm:text-2xl md:text-3xl">
           {SITE_NAME}
         </h1>
         <p className="max-w-md text-sm text-ghost-dim sm:text-base">

@@ -12,7 +12,6 @@
   --font-body: var(--font-inter), "Helvetica Neue", Arial, sans-serif;
 
   --animate-grain: grain 8s steps(10) infinite;
-  --animate-flicker: flicker 6s ease-in-out infinite;
 }
 
 :root {
@@ -114,36 +113,56 @@ body {
 
 /* ---------- Glitch / flicker ---------- */
 
-@keyframes flicker {
-  0%, 92%, 100% { opacity: 1; filter: none; }
-  93% { opacity: 0.4; filter: brightness(1.6) saturate(1.4); }
-  94% { opacity: 1; filter: none; }
-  95% { opacity: 0.3; filter: brightness(2) hue-rotate(10deg); }
-  96% { opacity: 1; filter: none; }
+/* Slow idle breathing glow on the wrapper — scale + soft ambient shadow. */
+@keyframes logo-breathe {
+  0%, 100% { transform: scale(1); filter: drop-shadow(0 0 0 transparent); }
+  50% { transform: scale(1.012); filter: drop-shadow(0 0 26px rgba(242, 242, 244, 0.16)); }
 }
 
-.glitch-flicker {
-  animation: var(--animate-flicker);
+.logo-breathe {
+  animation: logo-breathe 7s ease-in-out infinite;
 }
 
-@keyframes logo-glow {
-  0%, 88%, 100% { filter: drop-shadow(0 0 0 transparent); }
-  90% { filter: drop-shadow(0 0 18px rgba(125, 252, 255, 0.75)); }
-  94% { filter: drop-shadow(0 0 18px rgba(185, 139, 255, 0.75)); }
+/* Base image jitter + brightness pop, timed to match the RGB-split layers below. */
+@keyframes logo-glitch-base {
+  0%, 91%, 100% { transform: translate3d(0, 0, 0); filter: brightness(1); }
+  92% { transform: translate3d(1px, 0, 0); filter: brightness(1.35); }
+  93% { transform: translate3d(0, 0, 0); filter: brightness(1); }
+  94.5% { transform: translate3d(-1px, 0, 0); filter: brightness(1.25); }
+  95.5% { transform: translate3d(0, 0, 0); filter: brightness(1); }
 }
 
-.logo-glitch {
-  animation:
-    var(--animate-flicker),
-    logo-glow 5s ease-in-out infinite;
+.logo-glitch-base {
+  animation: logo-glitch-base 9s ease-in-out infinite;
+  animation-delay: 1.4s;
 }
 
-@keyframes glitch-shift {
-  0%, 100% { clip-path: inset(0 0 0 0); transform: translate(0, 0); }
-  20% { clip-path: inset(10% 0 60% 0); transform: translate(-2px, 0); }
-  40% { clip-path: inset(70% 0 5% 0); transform: translate(2px, 0); }
-  60% { clip-path: inset(40% 0 40% 0); transform: translate(-1px, 0); }
-  80% { clip-path: inset(5% 0 80% 0); transform: translate(1px, 0); }
+/* RGB channel-split glitch: solid color divs masked to the logo's own glow
+   shape, so the electric accent only ever touches the thin strokes. */
+@keyframes logo-glitch-cyan {
+  0%, 91%, 100% { opacity: 0; transform: translate3d(0, 0, 0); }
+  92% { opacity: 0.85; transform: translate3d(-4px, 0, 0); }
+  93% { opacity: 0; }
+  94.5% { opacity: 0.55; transform: translate3d(-2px, 1px, 0); }
+  95.5% { opacity: 0; }
+}
+
+@keyframes logo-glitch-violet {
+  0%, 91%, 100% { opacity: 0; transform: translate3d(0, 0, 0); }
+  92% { opacity: 0.85; transform: translate3d(4px, 0, 0); }
+  93% { opacity: 0; }
+  94.5% { opacity: 0.55; transform: translate3d(2px, -1px, 0); }
+  95.5% { opacity: 0; }
+}
+
+.logo-glitch-cyan {
+  animation: logo-glitch-cyan 9s ease-in-out infinite;
+  animation-delay: 1.4s;
+}
+
+.logo-glitch-violet {
+  animation: logo-glitch-violet 9s ease-in-out infinite;
+  animation-delay: 1.4s;
 }
 
 /* ---------- Flip countdown ---------- */
