@@ -1,0 +1,171 @@
+@import "tailwindcss";
+
+@theme inline {
+  --color-void: #000000;
+  --color-void-soft: #0b0b0e;
+  --color-ghost: #f2f2f4;
+  --color-ghost-dim: #a5a5ab;
+  --color-cyan: #7dfcff;
+  --color-violet: #b98bff;
+
+  --font-display: var(--font-bebas), "Arial Narrow", sans-serif;
+  --font-body: var(--font-inter), "Helvetica Neue", Arial, sans-serif;
+
+  --animate-grain: grain 8s steps(10) infinite;
+  --animate-flicker: flicker 6s ease-in-out infinite;
+}
+
+:root {
+  color-scheme: dark;
+}
+
+* {
+  scrollbar-color: var(--color-ghost-dim) var(--color-void);
+}
+
+html {
+  background: var(--color-void);
+}
+
+body {
+  background: var(--color-void);
+  color: var(--color-ghost);
+  font-family: var(--font-body);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  overflow-x: hidden;
+}
+
+::selection {
+  background: var(--color-cyan);
+  color: var(--color-void);
+}
+
+/* ---------- Display type ---------- */
+
+.font-display {
+  font-family: var(--font-display);
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+}
+
+/* ---------- Electric glow utilities ---------- */
+
+.glow-cyan {
+  text-shadow:
+    0 0 6px rgba(125, 252, 255, 0.9),
+    0 0 24px rgba(125, 252, 255, 0.45),
+    0 0 60px rgba(125, 252, 255, 0.2);
+}
+
+.glow-violet {
+  text-shadow:
+    0 0 6px rgba(185, 139, 255, 0.9),
+    0 0 24px rgba(185, 139, 255, 0.45),
+    0 0 60px rgba(185, 139, 255, 0.2);
+}
+
+.glow-border-cyan {
+  box-shadow:
+    0 0 0 1px rgba(125, 252, 255, 0.4),
+    0 0 24px rgba(125, 252, 255, 0.25),
+    0 0 80px rgba(125, 252, 255, 0.08);
+}
+
+/* ---------- Film grain overlay ---------- */
+
+.grain-layer {
+  position: fixed;
+  inset: -100px;
+  z-index: 60;
+  pointer-events: none;
+  opacity: 0.05;
+  mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  animation: var(--animate-grain);
+}
+
+@keyframes grain {
+  0%, 100% { transform: translate(0, 0); }
+  10% { transform: translate(-1%, -2%); }
+  20% { transform: translate(-3%, 1%); }
+  30% { transform: translate(2%, -3%); }
+  40% { transform: translate(-2%, 3%); }
+  50% { transform: translate(3%, 1%); }
+  60% { transform: translate(-1%, 2%); }
+  70% { transform: translate(1%, -1%); }
+  80% { transform: translate(-3%, -1%); }
+  90% { transform: translate(2%, 2%); }
+}
+
+/* ---------- Vignette overlay ---------- */
+
+.vignette-layer {
+  position: fixed;
+  inset: 0;
+  z-index: 59;
+  pointer-events: none;
+  background: radial-gradient(
+    ellipse at center,
+    transparent 45%,
+    rgba(0, 0, 0, 0.55) 100%
+  );
+}
+
+/* ---------- Glitch / flicker ---------- */
+
+@keyframes flicker {
+  0%, 92%, 100% { opacity: 1; filter: none; }
+  93% { opacity: 0.4; filter: brightness(1.6) saturate(1.4); }
+  94% { opacity: 1; filter: none; }
+  95% { opacity: 0.3; filter: brightness(2) hue-rotate(10deg); }
+  96% { opacity: 1; filter: none; }
+}
+
+.glitch-flicker {
+  animation: var(--animate-flicker);
+}
+
+@keyframes logo-glow {
+  0%, 88%, 100% { filter: drop-shadow(0 0 0 transparent); }
+  90% { filter: drop-shadow(0 0 18px rgba(125, 252, 255, 0.75)); }
+  94% { filter: drop-shadow(0 0 18px rgba(185, 139, 255, 0.75)); }
+}
+
+.logo-glitch {
+  animation:
+    var(--animate-flicker),
+    logo-glow 5s ease-in-out infinite;
+}
+
+@keyframes glitch-shift {
+  0%, 100% { clip-path: inset(0 0 0 0); transform: translate(0, 0); }
+  20% { clip-path: inset(10% 0 60% 0); transform: translate(-2px, 0); }
+  40% { clip-path: inset(70% 0 5% 0); transform: translate(2px, 0); }
+  60% { clip-path: inset(40% 0 40% 0); transform: translate(-1px, 0); }
+  80% { clip-path: inset(5% 0 80% 0); transform: translate(1px, 0); }
+}
+
+/* ---------- Flip countdown ---------- */
+
+.flip-digit {
+  font-family: var(--font-display);
+  font-variant-numeric: tabular-nums;
+}
+
+/* ---------- Reduced motion ---------- */
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  .grain-layer {
+    animation: none;
+  }
+}
