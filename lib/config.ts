@@ -14,6 +14,47 @@ export const TAGLINE_SUB = "Designed for those who move differently.";
 export const LAUNCH_DATE =
   process.env.NEXT_PUBLIC_LAUNCH_DATE || "2026-10-01T00:00:00-04:00";
 
+export const COPY = {
+  hero: {
+    headline: "ENTER THE VOID",
+    sub: "The first collection is approaching.",
+    subEmphasis: "Not everyone will make it inside.",
+    emailPlaceholder: "your@email.com",
+    cta: "NOTIFY ME",
+    ctaPending: "OPENING…",
+  },
+  success: {
+    headline: "WELCOME TO THE VOID.",
+    body: "Your star is in the sky. We'll reach out when the door opens.",
+  },
+  philosophy: {
+    eyebrow: "The Philosophy",
+    lines: [
+      "The void is not empty. It is unwritten.",
+      "Not clothing. Identity. Not a trend. A direction.",
+      "We build for the ones who move before the rest understand why.",
+    ],
+  },
+  firstDrop: {
+    eyebrow: "The First Drop",
+    headline: "It won't return.",
+    body: "Limited pieces. No mass production. No permanent collection. Once it's gone, it's gone — and it isn't coming back.",
+    countdownLabel: "Doors open in",
+  },
+  firstWave: {
+    eyebrow: "Join The First Wave",
+    headline: "Be inside before it exists.",
+    body: "Subscribers get in first — everyone else finds out after.",
+    benefits: [
+      "Early access before public release",
+      "Exclusive drop announcements",
+      "Behind-the-scenes from the studio",
+      "First chance to purchase — before it sells out",
+    ],
+    cta: "CLAIM YOUR PLACE",
+  },
+} as const;
+
 export const IMAGES = {
   logo: "/images/logo.png",
   hoodieJoggerSet:

@@ -111,6 +111,59 @@ body {
   );
 }
 
+/* ---------- Star field ---------- */
+
+.star-field-layer {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.star {
+  position: absolute;
+  border-radius: 9999px;
+  animation-name: star-enter, star-twinkle;
+  animation-timing-function: cubic-bezier(0.16, 1, 0.3, 1), ease-in-out;
+  animation-iteration-count: 1, infinite;
+  animation-fill-mode: forwards, none;
+  will-change: opacity, transform;
+}
+
+.star-boosted {
+  animation: star-boost-flash 0.9s ease-out !important;
+}
+
+@keyframes star-enter {
+  from { opacity: 0; transform: scale(0); }
+  to { opacity: var(--star-max-opacity, 1); transform: scale(1); }
+}
+
+@keyframes star-twinkle {
+  0%, 100% { opacity: var(--star-max-opacity, 1); transform: scale(1); }
+  50% { opacity: calc(var(--star-max-opacity, 1) * 0.32); transform: scale(0.78); }
+}
+
+@keyframes star-boost-flash {
+  0% { opacity: var(--star-max-opacity, 1); transform: scale(1); }
+  35% { opacity: 1; transform: scale(2.1); }
+  100% { opacity: var(--star-max-opacity, 1); transform: scale(1); }
+}
+
+@keyframes pulse-ring {
+  0% { opacity: 0.55; transform: scale(0.15); }
+  100% { opacity: 0; transform: scale(7); }
+}
+
+.pulse-ring {
+  position: absolute;
+  border-radius: 9999px;
+  border: 1px solid rgba(242, 242, 244, 0.5);
+  animation: pulse-ring 0.95s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  pointer-events: none;
+}
+
 /* ---------- Glitch / flicker ---------- */
 
 /* Slow idle breathing glow on the wrapper — scale + soft ambient shadow. */

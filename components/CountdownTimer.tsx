@@ -45,24 +45,28 @@ function FlipDigit({ value }: { value: string }) {
   );
 }
 
-function TimeBlock({ label, value }: { label: string; value: number }) {
+function TimeBlock({ label, value, size }: { label: string; value: number; size: "small" | "large" }) {
   const digits = value.toString().padStart(2, "0").split("");
 
   return (
-    <div className="flex flex-col items-center gap-2">
-      <div className="flip-digit glow-cyan flex text-4xl text-ghost sm:text-5xl md:text-6xl">
+    <div className="flex flex-col items-center gap-1.5">
+      <div
+        className={`flip-digit glow-cyan flex text-ghost ${
+          size === "large" ? "text-4xl sm:text-5xl md:text-6xl" : "text-xl sm:text-2xl"
+        }`}
+      >
         {digits.map((d, i) => (
           <FlipDigit key={i} value={d} />
         ))}
       </div>
-      <span className="text-[10px] tracking-[0.3em] text-ghost-dim uppercase sm:text-xs">
+      <span className="text-[9px] tracking-[0.3em] text-ghost-dim uppercase sm:text-[10px]">
         {label}
       </span>
     </div>
   );
 }
 
-export default function CountdownTimer() {
+export default function CountdownTimer({ size = "large" }: { size?: "small" | "large" }) {
   const [mounted, setMounted] = useState(false);
   const [timeLeft, setTimeLeft] = useState<TimeLeft>({ days: 0, hours: 0, minutes: 0, seconds: 0 });
 
@@ -74,20 +78,20 @@ export default function CountdownTimer() {
   }, []);
 
   if (!mounted) {
-    return <div className="h-[52px] sm:h-[64px] md:h-[76px]" aria-hidden />;
+    return <div className={size === "large" ? "h-[52px] sm:h-[64px] md:h-[76px]" : "h-[38px] sm:h-[44px]"} aria-hidden />;
   }
 
   return (
     <div
-      className="flex items-start gap-4 sm:gap-8"
+      className={`flex items-start ${size === "large" ? "gap-4 sm:gap-8" : "gap-3 sm:gap-5"}`}
       role="timer"
       aria-live="polite"
       aria-label={`${timeLeft.days} days, ${timeLeft.hours} hours, ${timeLeft.minutes} minutes, ${timeLeft.seconds} seconds until launch`}
     >
-      <TimeBlock label="Days" value={timeLeft.days} />
-      <TimeBlock label="Hours" value={timeLeft.hours} />
-      <TimeBlock label="Min" value={timeLeft.minutes} />
-      <TimeBlock label="Sec" value={timeLeft.seconds} />
+      <TimeBlock label="Days" value={timeLeft.days} size={size} />
+      <TimeBlock label="Hours" value={timeLeft.hours} size={size} />
+      <TimeBlock label="Min" value={timeLeft.minutes} size={size} />
+      <TimeBlock label="Sec" value={timeLeft.seconds} size={size} />
     </div>
   );
 }

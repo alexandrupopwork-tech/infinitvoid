@@ -1,18 +1,25 @@
 "use client";
 
-import { useState, type FormEvent } from "react";
-import { motion } from "framer-motion";
+import { useRef, useState, type FormEvent } from "react";
+import { AnimatePresence, motion } from "framer-motion";
+import MagneticButton from "@/components/MagneticButton";
+import { useStarField } from "@/components/StarFieldProvider";
+import { COPY } from "@/lib/config";
 
-type Status = "idle" | "loading" | "success" | "error";
+type Status = "idle" | "loading" | "morphing" | "success" | "error";
 
-export default function WaitlistForm() {
+const EASE = [0.16, 1, 0.3, 1] as const;
+
+export default function WaitlistForm({ ctaLabel }: { ctaLabel?: string }) {
   const [email, setEmail] = useState("");
   const [status, setStatus] = useState<Status>("idle");
   const [message, setMessage] = useState<string | null>(null);
+  const buttonRef = useRef<HTMLButtonElement>(null);
+  const { launchStar, justJoined } = useStarField();
 
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
-    if (status === "loading") return;
+    if (status === "loading" || status === "morphing" || status === "success") return;
 
     setStatus("loading");
     setMessage(null);
@@ -32,55 +39,103 @@ export default function WaitlistForm() {
         return;
       }
 
-      setStatus("success");
-      setMessage(data.message ?? "You're officially on the list.");
-      setEmail("");
+      const rect = buttonRef.current?.getBoundingClientRect();
+      const origin = {
+        x: rect ? rect.left + rect.width / 2 : window.innerWidth / 2,
+        y: rect ? rect.top + rect.height / 2 : window.innerHeight / 2,
+      };
+
+      // Beat 1: the button morphs into a single point of light.
+      setStatus("morphing");
+
+      window.setTimeout(() => {
+        // Beat 2: the form dissolves and the spark launches into the sky.
+        setStatus("success");
+        setEmail("");
+        launchStar(origin);
+      }, 420);
     } catch {
       setStatus("error");
       setMessage("Network error. Try again.");
     }
   }
 
-  if (status === "success") {
-    return (
-      <motion.p
-        initial={{ opacity: 0, y: 8 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5 }}
-        className="glow-cyan font-display text-lg tracking-wide text-ghost sm:text-xl"
-      >
-        {message}
-      </motion.p>
-    );
-  }
+  const showSuccess = status === "success" || (justJoined && status === "idle");
+  const formVisible = !showSuccess;
 
   return (
-    <div className="w-full max-w-md">
-      <form onSubmit={handleSubmit} className="flex flex-col gap-3 sm:flex-row" noValidate>
-        <label htmlFor="waitlist-email" className="sr-only">
-          Email address
-        </label>
-        <input
-          id="waitlist-email"
-          name="email"
-          type="email"
-          required
-          autoComplete="email"
-          inputMode="email"
-          placeholder="your@email.com"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          disabled={status === "loading"}
-          className="w-full flex-1 border border-white/15 bg-white/5 px-4 py-3 text-sm text-ghost placeholder:text-ghost-dim outline-none transition-colors duration-300 focus:border-cyan/70 disabled:opacity-50"
-        />
-        <button
-          type="submit"
-          disabled={status === "loading"}
-          className="group relative overflow-hidden border border-ghost/30 bg-ghost px-6 py-3 font-display text-sm tracking-[0.15em] text-void transition-all duration-300 hover:border-cyan disabled:cursor-not-allowed disabled:opacity-60"
-        >
-          <span className="relative z-10">{status === "loading" ? "JOINING…" : "JOIN THE WAITLIST"}</span>
-        </button>
-      </form>
+    <div className="mx-auto w-full max-w-lg">
+      <AnimatePresence mode="wait">
+        {formVisible ? (
+          <motion.form
+            key="form"
+            onSubmit={handleSubmit}
+            noValidate
+            exit={{ opacity: 0, scale: 0.85, filter: "blur(6px)" }}
+            transition={{ duration: 0.4, ease: EASE }}
+            className="flex flex-col gap-3 sm:flex-row"
+          >
+            <label htmlFor="waitlist-email" className="sr-only">
+              Email address
+            </label>
+            <input
+              id="waitlist-email"
+              name="email"
+              type="email"
+              required
+              autoComplete="email"
+              inputMode="email"
+              placeholder={COPY.hero.emailPlaceholder}
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              disabled={status !== "idle" && status !== "error"}
+              className="w-full flex-1 border border-white/15 bg-white/5 px-5 py-4 text-base text-ghost placeholder:text-ghost-dim outline-none transition-colors duration-300 focus:border-cyan/70 disabled:opacity-50"
+            />
+            <MagneticButton
+              ref={buttonRef}
+              type="submit"
+              disabled={status !== "idle" && status !== "error"}
+              className="group relative flex min-w-[168px] items-center justify-center overflow-hidden border border-ghost/30 bg-ghost px-7 py-4 font-display text-sm tracking-[0.15em] text-void transition-colors duration-300 hover:border-cyan disabled:cursor-not-allowed"
+            >
+              <AnimatePresence mode="wait" initial={false}>
+                {status === "morphing" ? (
+                  <motion.span
+                    key="spark"
+                    initial={{ opacity: 0, scale: 0.4 }}
+                    animate={{ opacity: 1, scale: [0.4, 1.3, 1] }}
+                    transition={{ duration: 0.35, ease: EASE }}
+                    className="glow-cyan block h-2 w-2 rounded-full bg-void"
+                  />
+                ) : (
+                  <motion.span
+                    key="label"
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    exit={{ opacity: 0 }}
+                    transition={{ duration: 0.2 }}
+                    className="relative z-10"
+                  >
+                    {status === "loading" ? COPY.hero.ctaPending : (ctaLabel ?? COPY.hero.cta)}
+                  </motion.span>
+                )}
+              </AnimatePresence>
+            </MagneticButton>
+          </motion.form>
+        ) : (
+          <motion.div
+            key="success"
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.5, delay: status === "success" ? 0.9 : 0, ease: EASE }}
+            className="flex items-center justify-center gap-2 py-4"
+          >
+            <span className="glow-cyan text-lg text-cyan">✦</span>
+            <span className="font-display text-sm tracking-[0.2em] text-ghost-dim uppercase">
+              You&apos;re in
+            </span>
+          </motion.div>
+        )}
+      </AnimatePresence>
 
       {status === "error" && message && (
         <motion.p
