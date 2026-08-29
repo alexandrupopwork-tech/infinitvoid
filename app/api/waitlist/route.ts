@@ -1,6 +1,7 @@
-import { NextResponse } from "next/server";
+import { NextResponse, after } from "next/server";
 import { createSupabaseAnonServerClient } from "@/lib/supabase/anon-server";
 import { isValidEmail, normalizeEmail } from "@/lib/validate-email";
+import { sendWelcomeEmail } from "@/lib/email";
 
 export async function POST(request: Request) {
   let body: unknown;
@@ -40,6 +41,8 @@ export async function POST(request: Request) {
       { status: 500 }
     );
   }
+
+  after(() => sendWelcomeEmail(email));
 
   return NextResponse.json({ message: "You're officially on the list." }, { status: 201 });
 }
