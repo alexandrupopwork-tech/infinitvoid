@@ -28,7 +28,7 @@ export default function Logo({
   priority = false,
   sizes,
 }: LogoProps) {
-  const aspectClass = variant === "wide" ? "aspect-[1652/591]" : "aspect-square";
+  const aspectClass = variant === "wide" ? "aspect-[679/370]" : "aspect-square";
 
   return (
     <div className={`relative ${aspectClass} ${className} ${glitch ? "logo-breathe" : ""}`}>

@@ -41,7 +41,7 @@ export default function Loader({ onComplete }: { onComplete: () => void }) {
               }
             }}
           >
-            <div className="relative w-[70vw] max-w-md aspect-[1652/591]">
+            <div className="relative w-[70vw] max-w-md aspect-[679/370]">
               <Image src={IMAGES.logo} alt={`${SITE_NAME} logo`} fill className="object-contain" priority />
             </div>
           </motion.div>
@@ -72,7 +72,7 @@ export default function Loader({ onComplete }: { onComplete: () => void }) {
           />
 
           <motion.div
-            className="relative w-[70vw] max-w-md aspect-[1652/591]"
+            className="relative w-[70vw] max-w-md aspect-[679/370]"
             initial={{ clipPath: "circle(0% at 50% 50%)", filter: "blur(10px)", scale: 0.9 }}
             animate={{ clipPath: "circle(150% at 50% 50%)", filter: "blur(0px)", scale: 1 }}
             transition={{ duration: 1.3, ease: EASE }}
@@ -85,7 +85,7 @@ export default function Loader({ onComplete }: { onComplete: () => void }) {
 
           {phase === "flicker" && (
             <div className="pointer-events-none absolute inset-0 flex items-center justify-center">
-              <div className="relative w-[70vw] max-w-md aspect-[1652/591]">
+              <div className="relative w-[70vw] max-w-md aspect-[679/370]">
                 <motion.div
                   className="absolute inset-0"
                   animate={{ opacity: [1, 0.2, 1, 0.35, 1] }}

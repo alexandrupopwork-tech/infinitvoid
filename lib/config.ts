@@ -62,7 +62,7 @@ export const IMAGES = {
 } as const;
 
 /** Intrinsic pixel size of /public/images/logo.png, used to keep its aspect ratio. */
-export const LOGO_DIMENSIONS = { width: 1652, height: 591 } as const;
+export const LOGO_DIMENSIONS = { width: 679, height: 370 } as const;
 
 export const SOCIALS = {
   instagram: "https://instagram.com/infinitvoid",
