@@ -57,10 +57,8 @@ export const COPY = {
 
 export const IMAGES = {
   logo: "/images/logo.png",
-  hoodieJoggerSet:
-    "https://d8j0ntlcm91z4.cloudfront.net/user_3GlKKGrFEgrTveXDzx5pDsAUZ3y/hf_20260802_182652_e18e2c9f-2d6e-4861-b99e-6f041c2e04a6.png",
-  tracksuitJoggerSet:
-    "https://d8j0ntlcm91z4.cloudfront.net/user_3GlKKGrFEgrTveXDzx5pDsAUZ3y/hf_20260802_182659_2c72bfc0-c386-47ed-91bc-f100eaa90c31.png",
+  hoodieFront: "/images/hoodie-front.jpg",
+  hoodieBack: "/images/hoodie-back.png",
 } as const;
 
 /** Intrinsic pixel size of /public/images/logo.png, used to keep its aspect ratio. */
@@ -71,17 +69,16 @@ export const SOCIALS = {
   tiktok: "https://tiktok.com/@infinitvoid",
 } as const;
 
-export const PRODUCTS = [
-  {
-    id: "hoodie-jogger",
-    name: "Hoodie + Jogger Set",
-    description: "Heavyweight cut-and-sew hoodie and tapered jogger, built as one silhouette.",
-    image: IMAGES.hoodieJoggerSet,
-  },
-  {
-    id: "tracksuit-jogger",
-    name: "Tracksuit + Jogger Set",
-    description: "Full-zip tracksuit jacket and matching jogger, engineered for movement.",
-    image: IMAGES.tracksuitJoggerSet,
-  },
-] as const;
+/**
+ * The first drop is a single piece. Shown as a two-angle gallery
+ * (front/back) under one shared name and description.
+ */
+export const PRODUCT = {
+  name: "INFINITVOID Zip Hoodie",
+  description:
+    "Heavyweight cut-and-sew zip hoodie, tonal embroidered graphic, infinity-mark hardware. Built as one piece, released as the only piece.",
+  images: [
+    { id: "front", label: "Front", src: IMAGES.hoodieFront },
+    { id: "back", label: "Back", src: IMAGES.hoodieBack },
+  ],
+} as const;

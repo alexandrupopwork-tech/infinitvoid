@@ -5,13 +5,12 @@ import Image from "next/image";
 import { motion, useMotionValue, useSpring, useTransform } from "framer-motion";
 
 type ProductCardProps = {
-  name: string;
-  description: string;
+  label: string;
   image: string;
   index: number;
 };
 
-export default function ProductCard({ name, description, image, index }: ProductCardProps) {
+export default function ProductCard({ label, image, index }: ProductCardProps) {
   const ref = useRef<HTMLDivElement>(null);
 
   const mouseX = useMotionValue(0.5);
@@ -58,7 +57,7 @@ export default function ProductCard({ name, description, image, index }: Product
       >
         <Image
           src={image}
-          alt={name}
+          alt={label}
           fill
           sizes="(min-width: 1024px) 45vw, 90vw"
           className="object-cover transition-transform duration-700 ease-out group-hover:scale-105"
@@ -77,10 +76,7 @@ export default function ProductCard({ name, description, image, index }: Product
         />
       </motion.div>
 
-      <div className="flex flex-col gap-1 text-left">
-        <h3 className="font-display text-xl tracking-wide text-ghost sm:text-2xl">{name}</h3>
-        <p className="text-sm text-ghost-dim">{description}</p>
-      </div>
+      <span className="text-xs tracking-[0.3em] text-ghost-dim uppercase">{label}</span>
     </motion.div>
   );
 }
