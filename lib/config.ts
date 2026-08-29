@@ -1,5 +1,5 @@
 export const SITE_URL =
-  process.env.NEXT_PUBLIC_SITE_URL?.replace(/\/$/, "") || "https://infinitvoid.com";
+  process.env.NEXT_PUBLIC_SITE_URL?.replace(/\/$/, "") || "https://infinitvoidofficial.com";
 
 export const SITE_NAME = "INFINITVOID";
 
