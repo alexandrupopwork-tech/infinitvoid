@@ -78,26 +78,27 @@ export default function ProductCard({ front, back }: ProductCardProps) {
                 className="absolute inset-0"
                 style={{ backfaceVisibility: "hidden", transform: i === 1 ? "rotateY(180deg)" : undefined }}
               >
-                {/* ambient cursor-follow glow, behind the garment */}
+                {/* ambient cursor-follow glow, behind the garment, hover-only */}
                 <motion.div
                   aria-hidden
-                  className="pointer-events-none absolute inset-0 opacity-60 transition-opacity duration-500 group-hover:opacity-100"
+                  className="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-500 group-hover:opacity-100"
                   style={{ background: glowBackground }}
                 />
 
-                {/* static spotlight pooling under the hoodie for grounding + depth */}
+                {/* thin grounding line under the hoodie, no haze */}
                 <div
                   aria-hidden
-                  className="pointer-events-none absolute inset-x-[8%] bottom-[6%] h-1/3 rounded-[50%] bg-cyan/10 blur-3xl"
+                  className="pointer-events-none absolute inset-x-[18%] bottom-[7%] h-px bg-gradient-to-r from-transparent via-white/15 to-transparent"
                 />
 
                 <Image
                   src={face.src}
                   alt={face.label}
                   fill
+                  quality={95}
                   sizes="(min-width: 1024px) 45vw, 90vw"
                   priority={i === 0}
-                  className="object-contain object-bottom drop-shadow-[0_30px_60px_rgba(0,0,0,0.65)] transition-transform duration-500 group-hover:scale-[1.03]"
+                  className="object-contain object-bottom drop-shadow-[0_12px_18px_rgba(0,0,0,0.55)] transition-transform duration-500 group-hover:scale-[1.03]"
                 />
               </div>
             ))}
