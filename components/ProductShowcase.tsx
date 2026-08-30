@@ -2,6 +2,8 @@ import ProductCard from "@/components/ProductCard";
 import { PRODUCT } from "@/lib/config";
 
 export default function ProductShowcase() {
+  const [front, back] = PRODUCT.images;
+
   return (
     <section id="collection" className="relative px-6 py-24 sm:px-10 sm:py-32">
       <div className="mx-auto mb-16 max-w-3xl text-center sm:mb-20">
@@ -14,11 +16,7 @@ export default function ProductShowcase() {
         </p>
       </div>
 
-      <div className="mx-auto grid max-w-6xl grid-cols-1 gap-14 lg:grid-cols-2 lg:gap-10">
-        {PRODUCT.images.map((image, index) => (
-          <ProductCard key={image.id} label={image.label} image={image.src} index={index} />
-        ))}
-      </div>
+      <ProductCard front={front} back={back} />
     </section>
   );
 }
