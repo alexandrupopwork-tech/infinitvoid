@@ -57,7 +57,7 @@ export const COPY = {
 
 export const IMAGES = {
   logo: "/images/logo.png",
-  hoodieFront: "/images/hoodie-front.jpg",
+  hoodieFront: "/images/hoodie-front.png",
   hoodieBack: "/images/hoodie-back.png",
 } as const;
 

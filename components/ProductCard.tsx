@@ -75,27 +75,29 @@ export default function ProductCard({ front, back }: ProductCardProps) {
             {[front, back].map((face, i) => (
               <div
                 key={face.id}
-                className="absolute inset-0 overflow-hidden border border-white/10 bg-void-soft transition-shadow duration-500 group-hover:shadow-[0_0_60px_-10px_rgba(125,252,255,0.25)]"
+                className="absolute inset-0"
                 style={{ backfaceVisibility: "hidden", transform: i === 1 ? "rotateY(180deg)" : undefined }}
               >
+                {/* ambient cursor-follow glow, behind the garment */}
+                <motion.div
+                  aria-hidden
+                  className="pointer-events-none absolute inset-0 opacity-60 transition-opacity duration-500 group-hover:opacity-100"
+                  style={{ background: glowBackground }}
+                />
+
+                {/* static spotlight pooling under the hoodie for grounding + depth */}
+                <div
+                  aria-hidden
+                  className="pointer-events-none absolute inset-x-[8%] bottom-[6%] h-1/3 rounded-[50%] bg-cyan/10 blur-3xl"
+                />
+
                 <Image
                   src={face.src}
                   alt={face.label}
                   fill
                   sizes="(min-width: 1024px) 45vw, 90vw"
                   priority={i === 0}
-                  className="object-cover"
-                />
-
-                {/* light sweep */}
-                <motion.div
-                  aria-hidden
-                  className="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-500 group-hover:opacity-100"
-                  style={{ background: glowBackground }}
-                />
-                <div
-                  aria-hidden
-                  className="pointer-events-none absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/15 to-transparent transition-transform duration-700 ease-out group-hover:translate-x-full"
+                  className="object-contain object-bottom drop-shadow-[0_30px_60px_rgba(0,0,0,0.65)] transition-transform duration-500 group-hover:scale-[1.03]"
                 />
               </div>
             ))}
