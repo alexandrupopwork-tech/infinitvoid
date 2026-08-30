@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, type MouseEvent } from "react";
+import { useEffect, useRef } from "react";
 import { motion, useMotionValue, useReducedMotion, useSpring } from "framer-motion";
 
 export default function CursorGlow() {
@@ -12,22 +12,24 @@ export default function CursorGlow() {
   const springX = useSpring(x, { stiffness: 60, damping: 20, mass: 0.6 });
   const springY = useSpring(y, { stiffness: 60, damping: 20, mass: 0.6 });
 
+  useEffect(() => {
+    if (reducedMotion) return;
+
+    function handleMouseMove(event: globalThis.MouseEvent) {
+      const rect = ref.current?.getBoundingClientRect();
+      if (!rect) return;
+      x.set(event.clientX - rect.left);
+      y.set(event.clientY - rect.top);
+    }
+
+    window.addEventListener("mousemove", handleMouseMove);
+    return () => window.removeEventListener("mousemove", handleMouseMove);
+  }, [reducedMotion, x, y]);
+
   if (reducedMotion) return null;
 
-  function handleMouseMove(event: MouseEvent<HTMLDivElement>) {
-    const rect = ref.current?.getBoundingClientRect();
-    if (!rect) return;
-    x.set(event.clientX - rect.left);
-    y.set(event.clientY - rect.top);
-  }
-
   return (
-    <div
-      ref={ref}
-      className="absolute inset-0 overflow-hidden"
-      onMouseMove={handleMouseMove}
-      aria-hidden
-    >
+    <div ref={ref} className="pointer-events-none absolute inset-0 overflow-hidden" aria-hidden>
       <motion.div
         className="pointer-events-none absolute h-[38vw] w-[38vw] max-h-[420px] max-w-[420px] rounded-full opacity-[0.06]"
         style={{
