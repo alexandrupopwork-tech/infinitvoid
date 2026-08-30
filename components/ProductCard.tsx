@@ -61,14 +61,19 @@ export default function ProductCard({ front, back }: ProductCardProps) {
           onMouseEnter={() => setFlipped(true)}
           onMouseLeave={handleMouseLeave}
           onClick={() => setFlipped((f) => !f)}
-          style={{ rotateX: tiltX, rotateY: tiltY, transformStyle: "preserve-3d" }}
+          style={{
+            rotateX: tiltX,
+            rotateY: tiltY,
+            transformStyle: "preserve-3d",
+            WebkitTransformStyle: "preserve-3d",
+          }}
           whileHover={{ scale: 1.02 }}
           transition={{ scale: { duration: 0.4, ease: EASE } }}
           className="relative h-full w-full cursor-pointer"
         >
           <motion.div
             className="relative h-full w-full"
-            style={{ transformStyle: "preserve-3d" }}
+            style={{ transformStyle: "preserve-3d", WebkitTransformStyle: "preserve-3d" }}
             animate={{ rotateY: flipped ? 180 : 0 }}
             transition={{ duration: reducedMotion ? 0.05 : 0.85, ease: EASE }}
           >
@@ -76,7 +81,11 @@ export default function ProductCard({ front, back }: ProductCardProps) {
               <div
                 key={face.id}
                 className="absolute inset-0"
-                style={{ backfaceVisibility: "hidden", transform: i === 1 ? "rotateY(180deg)" : undefined }}
+                style={{
+                  backfaceVisibility: "hidden",
+                  WebkitBackfaceVisibility: "hidden",
+                  transform: i === 1 ? "rotateY(180deg)" : undefined,
+                }}
               >
                 {/* ambient cursor-follow glow, behind the garment, hover-only */}
                 <motion.div
