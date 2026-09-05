@@ -66,7 +66,7 @@ export const LOGO_DIMENSIONS = { width: 679, height: 370 } as const;
 
 export const SOCIALS = {
   instagram: "https://www.instagram.com/infinitvoidofficial/",
-  tiktok: "https://tiktok.com/@infinitvoid",
+  tiktok: "https://www.tiktok.com/@infinitvoidofficial",
 } as const;
 
 /**
