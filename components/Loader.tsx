@@ -20,9 +20,43 @@ const maskStyle: CSSProperties = {
   maskPosition: "center",
 };
 
+/**
+ * The headline uses a custom display font (Metal Mania). If the loader
+ * hands off to the Hero before that font has actually loaded, the headline
+ * renders in a fallback font first and visibly snaps into the real one
+ * mid-animation. Waiting on document.fonts.ready avoids that pop.
+ */
+function useFontsReady(): boolean {
+  const [ready, setReady] = useState(false);
+
+  useEffect(() => {
+    if (typeof document === "undefined" || !("fonts" in document)) {
+      setReady(true);
+      return;
+    }
+    let cancelled = false;
+    document.fonts.ready.then(() => {
+      if (!cancelled) setReady(true);
+    });
+    return () => {
+      cancelled = true;
+    };
+  }, []);
+
+  return ready;
+}
+
 export default function Loader({ onComplete }: { onComplete: () => void }) {
   const reducedMotion = useReducedMotion();
   const [phase, setPhase] = useState<Phase>("reveal");
+  const [revealDone, setRevealDone] = useState(false);
+  const fontsReady = useFontsReady();
+
+  useEffect(() => {
+    if (revealDone && fontsReady) {
+      onComplete();
+    }
+  }, [revealDone, fontsReady, onComplete]);
 
   if (reducedMotion) {
     return (
@@ -37,7 +71,7 @@ export default function Loader({ onComplete }: { onComplete: () => void }) {
             transition={{ duration: 0.4 }}
             onAnimationComplete={() => {
               if (phase === "reveal") {
-                onComplete();
+                setRevealDone(true);
                 setTimeout(() => setPhase("hidden"), 250);
               }
             }}
@@ -95,7 +129,7 @@ export default function Loader({ onComplete }: { onComplete: () => void }) {
                     // Let the Hero start fading in now, while the loader is
                     // still visible, so the two crossfade instead of leaving
                     // a dip to black between "logo settles" and "text appears".
-                    onComplete();
+                    setRevealDone(true);
                     setPhase("exit");
                   }}
                 >
