@@ -21,7 +21,7 @@ function HeadlineWords({ text, ready }: { text: string; ready: boolean }) {
             className="inline-block"
             initial={{ y: "110%" }}
             animate={ready ? { y: "0%" } : {}}
-            transition={{ duration: 0.9, ease: EASE, delay: 0.15 + i * 0.09 }}
+            transition={{ duration: 0.9, ease: EASE, delay: 0.15 }}
           >
             {word}
             {i < words.length - 1 ? " " : ""}
