@@ -55,7 +55,7 @@ export default function Hero() {
         />
       </motion.div>
 
-      <h1 className="font-display text-5xl leading-[0.95] tracking-[0.02em] text-ghost sm:text-7xl md:text-8xl">
+      <h1 className="font-display text-chrome text-5xl leading-[0.95] tracking-[0.02em] sm:text-7xl md:text-8xl">
         <motion.span
           key={headline}
           initial={{ opacity: 0 }}

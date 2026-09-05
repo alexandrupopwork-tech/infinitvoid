@@ -35,7 +35,7 @@ export default function Philosophy() {
             variants={line}
             className={
               i === 0
-                ? "font-display text-3xl leading-tight tracking-wide text-ghost sm:text-4xl md:text-5xl"
+                ? "font-display text-chrome text-3xl leading-tight tracking-wide sm:text-4xl md:text-5xl"
                 : "max-w-xl text-lg leading-relaxed text-ghost-dim sm:text-xl"
             }
           >

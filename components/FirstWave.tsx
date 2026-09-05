@@ -30,7 +30,7 @@ export default function FirstWave() {
           <span className="text-xs tracking-[0.4em] text-cyan uppercase">
             {COPY.firstWave.eyebrow}
           </span>
-          <h2 className="font-display text-4xl leading-[0.95] tracking-wide text-ghost sm:text-6xl">
+          <h2 className="font-display text-chrome text-4xl leading-[0.95] tracking-wide sm:text-6xl">
             {COPY.firstWave.headline}
           </h2>
           <p className="max-w-md text-base text-ghost-dim sm:text-lg">{COPY.firstWave.body}</p>

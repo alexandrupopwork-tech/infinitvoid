@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { Bebas_Neue, Inter } from "next/font/google";
+import { Bebas_Neue, Inter, Metal_Mania } from "next/font/google";
 import "./globals.css";
 import AmbientOverlay from "@/components/AmbientOverlay";
 import { IMAGES, SITE_NAME, SITE_URL, TAGLINE } from "@/lib/config";
@@ -8,6 +8,13 @@ const bebasNeue = Bebas_Neue({
   weight: "400",
   subsets: ["latin"],
   variable: "--font-bebas",
+  display: "swap",
+});
+
+const metalMania = Metal_Mania({
+  weight: "400",
+  subsets: ["latin"],
+  variable: "--font-metal",
   display: "swap",
 });
 
@@ -80,7 +87,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${bebasNeue.variable} ${inter.variable} h-full`}>
+    <html lang="en" className={`${bebasNeue.variable} ${metalMania.variable} ${inter.variable} h-full`}>
       <body className="min-h-full bg-void font-body text-ghost antialiased">
         <AmbientOverlay />
         {children}

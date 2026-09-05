@@ -20,7 +20,7 @@ export default function FirstDrop() {
           {COPY.firstDrop.eyebrow}
         </span>
 
-        <h2 className="font-display text-4xl leading-[0.95] tracking-wide text-ghost sm:text-6xl md:text-7xl">
+        <h2 className="font-display text-chrome text-4xl leading-[0.95] tracking-wide sm:text-6xl md:text-7xl">
           {COPY.firstDrop.headline}
         </h2>
 
