@@ -44,7 +44,7 @@ export default function Hero() {
       <motion.div
         initial={{ opacity: 0, scale: 0.85 }}
         animate={ready ? { opacity: 1, scale: 1 } : {}}
-        transition={{ duration: 1, ease: EASE }}
+        transition={{ duration: 0.5, ease: EASE }}
       >
         <Logo
           variant="wide"

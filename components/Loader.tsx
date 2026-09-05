@@ -26,7 +26,7 @@ export default function Loader({ onComplete }: { onComplete: () => void }) {
 
   if (reducedMotion) {
     return (
-      <AnimatePresence onExitComplete={onComplete}>
+      <AnimatePresence>
         {phase !== "hidden" && (
           <motion.div
             key="loader"
@@ -37,6 +37,7 @@ export default function Loader({ onComplete }: { onComplete: () => void }) {
             transition={{ duration: 0.4 }}
             onAnimationComplete={() => {
               if (phase === "reveal") {
+                onComplete();
                 setTimeout(() => setPhase("hidden"), 250);
               }
             }}
@@ -51,12 +52,12 @@ export default function Loader({ onComplete }: { onComplete: () => void }) {
   }
 
   return (
-    <AnimatePresence onExitComplete={onComplete}>
+    <AnimatePresence>
       {phase !== "hidden" && (
         <motion.div
           key="loader"
           className="fixed inset-0 z-[100] flex items-center justify-center bg-void"
-          exit={{ opacity: 0, transition: { duration: 0.6, ease: EASE } }}
+          exit={{ opacity: 0, transition: { duration: 0.25, ease: EASE } }}
         >
           {/* Expanding glow ring — the void opening up */}
           <motion.div
@@ -90,7 +91,13 @@ export default function Loader({ onComplete }: { onComplete: () => void }) {
                   className="absolute inset-0"
                   animate={{ opacity: [1, 0.2, 1, 0.35, 1] }}
                   transition={{ duration: 0.55, times: [0, 0.2, 0.45, 0.7, 1] }}
-                  onAnimationComplete={() => setPhase("exit")}
+                  onAnimationComplete={() => {
+                    // Let the Hero start fading in now, while the loader is
+                    // still visible, so the two crossfade instead of leaving
+                    // a dip to black between "logo settles" and "text appears".
+                    onComplete();
+                    setPhase("exit");
+                  }}
                 >
                   <Image src={IMAGES.logo} alt="" aria-hidden fill className="object-contain" priority />
                 </motion.div>
