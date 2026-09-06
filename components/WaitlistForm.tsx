@@ -1,6 +1,7 @@
 "use client";
 
-import { useRef, useState, type FormEvent } from "react";
+import { useId, useRef, useState, type FormEvent } from "react";
+import Link from "next/link";
 import { AnimatePresence, motion } from "framer-motion";
 import MagneticButton from "@/components/MagneticButton";
 import { useStarField } from "@/components/StarFieldProvider";
@@ -11,6 +12,7 @@ type Status = "idle" | "loading" | "morphing" | "success" | "error";
 const EASE = [0.16, 1, 0.3, 1] as const;
 
 export default function WaitlistForm({ ctaLabel }: { ctaLabel?: string }) {
+  const emailFieldId = useId();
   const [email, setEmail] = useState("");
   const [status, setStatus] = useState<Status>("idle");
   const [message, setMessage] = useState<string | null>(null);
@@ -73,53 +75,63 @@ export default function WaitlistForm({ ctaLabel }: { ctaLabel?: string }) {
             noValidate
             exit={{ opacity: 0, scale: 0.85, filter: "blur(6px)" }}
             transition={{ duration: 0.4, ease: EASE }}
-            className="flex flex-col gap-3 sm:flex-row"
+            className="flex flex-col gap-3"
           >
-            <label htmlFor="waitlist-email" className="sr-only">
-              Email address
-            </label>
-            <input
-              id="waitlist-email"
-              name="email"
-              type="email"
-              required
-              autoComplete="email"
-              inputMode="email"
-              placeholder={COPY.hero.emailPlaceholder}
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              disabled={status !== "idle" && status !== "error"}
-              className="w-full flex-1 border border-white/15 bg-white/5 px-5 py-4 text-base text-ghost placeholder:text-ghost-dim outline-none transition-colors duration-300 focus:border-cyan/70 disabled:opacity-50"
-            />
-            <MagneticButton
-              ref={buttonRef}
-              type="submit"
-              disabled={status !== "idle" && status !== "error"}
-              className="group relative flex min-w-[168px] items-center justify-center overflow-hidden border border-ghost/30 bg-ghost px-7 py-4 font-display text-sm tracking-[0.15em] text-void transition-colors duration-300 hover:border-cyan disabled:cursor-not-allowed"
-            >
-              <AnimatePresence mode="wait" initial={false}>
-                {status === "morphing" ? (
-                  <motion.span
-                    key="spark"
-                    initial={{ opacity: 0, scale: 0.4 }}
-                    animate={{ opacity: 1, scale: [0.4, 1.3, 1] }}
-                    transition={{ duration: 0.35, ease: EASE }}
-                    className="glow-cyan block h-2 w-2 rounded-full bg-void"
-                  />
-                ) : (
-                  <motion.span
-                    key="label"
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    exit={{ opacity: 0 }}
-                    transition={{ duration: 0.2 }}
-                    className="relative z-10"
-                  >
-                    {status === "loading" ? COPY.hero.ctaPending : (ctaLabel ?? COPY.hero.cta)}
-                  </motion.span>
-                )}
-              </AnimatePresence>
-            </MagneticButton>
+            <div className="flex flex-col gap-3 sm:flex-row">
+              <label htmlFor={emailFieldId} className="sr-only">
+                Email address
+              </label>
+              <input
+                id={emailFieldId}
+                name="email"
+                type="email"
+                required
+                autoComplete="email"
+                inputMode="email"
+                placeholder={COPY.hero.emailPlaceholder}
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                disabled={status !== "idle" && status !== "error"}
+                className="w-full flex-1 border border-white/15 bg-white/5 px-5 py-4 text-base text-ghost placeholder:text-ghost-dim outline-none transition-colors duration-300 focus:border-cyan/70 focus-visible:ring-2 focus-visible:ring-cyan/70 focus-visible:ring-offset-2 focus-visible:ring-offset-void disabled:opacity-50"
+              />
+              <MagneticButton
+                ref={buttonRef}
+                type="submit"
+                disabled={status !== "idle" && status !== "error"}
+                className="group relative flex min-w-[168px] items-center justify-center overflow-hidden border border-ghost/30 bg-ghost px-7 py-4 font-display text-sm tracking-[0.15em] text-void transition-colors duration-300 hover:border-cyan focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan focus-visible:ring-offset-2 focus-visible:ring-offset-void disabled:cursor-not-allowed"
+              >
+                <AnimatePresence mode="wait" initial={false}>
+                  {status === "morphing" ? (
+                    <motion.span
+                      key="spark"
+                      initial={{ opacity: 0, scale: 0.4 }}
+                      animate={{ opacity: 1, scale: [0.4, 1.3, 1] }}
+                      transition={{ duration: 0.35, ease: EASE }}
+                      className="glow-cyan block h-2 w-2 rounded-full bg-void"
+                    />
+                  ) : (
+                    <motion.span
+                      key="label"
+                      initial={{ opacity: 0 }}
+                      animate={{ opacity: 1 }}
+                      exit={{ opacity: 0 }}
+                      transition={{ duration: 0.2 }}
+                      className="relative z-10"
+                    >
+                      {status === "loading" ? COPY.hero.ctaPending : (ctaLabel ?? COPY.hero.cta)}
+                    </motion.span>
+                  )}
+                </AnimatePresence>
+              </MagneticButton>
+            </div>
+
+            <p className="text-center text-xs leading-relaxed text-ghost-dim/70 sm:text-left">
+              By joining, you agree to receive email updates about the drop and to our{" "}
+              <Link href="/privacy" className="underline decoration-ghost-dim/40 underline-offset-2 hover:text-ghost">
+                Privacy Policy
+              </Link>
+              . Unsubscribe anytime.
+            </p>
           </motion.form>
         ) : (
           <motion.div

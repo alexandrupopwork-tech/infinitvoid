@@ -3,6 +3,7 @@
 import { useRef, type MouseEvent } from "react";
 import Image from "next/image";
 import { motion, useMotionValue, useTransform } from "framer-motion";
+import { PRODUCT } from "@/lib/config";
 
 type ProductFace = { id: string; label: string; src: string };
 
@@ -65,7 +66,7 @@ function Face({ face, index, priority }: { face: ProductFace; index: number; pri
 
         <Image
           src={face.src}
-          alt={face.label}
+          alt={`${PRODUCT.name} — ${face.label.toLowerCase()} view`}
           fill
           quality={95}
           sizes="(min-width: 1024px) 40vw, 90vw"

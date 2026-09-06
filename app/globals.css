@@ -66,6 +66,43 @@ body {
   text-shadow: 0 2px 10px rgba(0, 0, 0, 0.55);
 }
 
+/* ---------- Legal page prose ---------- */
+
+.legal-prose h2 {
+  margin-top: 0.5rem;
+  font-family: var(--font-body);
+  font-size: 1.05rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  color: var(--color-ghost);
+}
+
+.legal-prose h3 {
+  font-family: var(--font-body);
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--color-ghost);
+}
+
+.legal-prose a {
+  color: var(--color-cyan);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.legal-prose ul {
+  list-style: disc;
+  padding-left: 1.25rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.legal-prose strong {
+  color: var(--color-ghost);
+  font-weight: 600;
+}
+
 /* ---------- Electric glow utilities ---------- */
 
 .glow-cyan {

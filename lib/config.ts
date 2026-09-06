@@ -37,8 +37,8 @@ export const COPY = {
   },
   firstDrop: {
     eyebrow: "The First Drop",
-    headline: "It won't return.",
-    body: "Limited pieces. No mass production. No permanent collection. Once it's gone, it's gone — and it isn't coming back.",
+    headline: "Once it's gone, it's gone.",
+    body: "A small run, released once. No restocks planned — get in before the first wave closes.",
     countdownLabel: "Doors open in",
   },
   firstWave: {
@@ -63,6 +63,23 @@ export const IMAGES = {
 
 /** Intrinsic pixel size of /public/images/logo.png, used to keep its aspect ratio. */
 export const LOGO_DIMENSIONS = { width: 679, height: 370 } as const;
+
+/**
+ * Trader identity shown on the legal pages and in the footer. EU law (the
+ * E-Commerce Directive and Belgian Code of Economic Law, Book VI) requires
+ * an operating business to be identifiable by name and address — this
+ * cannot ship with placeholders still in it. A Belgian sole trader
+ * ("eenmanszaak") generally needs to register an enterprise number with
+ * the KBO/BCE once trading commercially, even without incorporating.
+ */
+export const BUSINESS = {
+  legalName: "[YOUR FULL LEGAL NAME — fill in before launch]",
+  tradingAs: SITE_NAME,
+  country: "Belgium",
+  address: "[YOUR BUSINESS CONTACT ADDRESS — fill in before launch]",
+  contactEmail: "team@infinitvoidofficial.com",
+  registrationNumber: "", // KBO/BCE enterprise number and/or VAT number, once registered
+} as const;
 
 export const SOCIALS = {
   instagram: "https://www.instagram.com/infinitvoidofficial/",

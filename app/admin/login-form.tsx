@@ -24,7 +24,7 @@ export default function LoginForm() {
           autoFocus
           autoComplete="current-password"
           placeholder="Password"
-          className="w-full border border-white/15 bg-white/5 px-4 py-3 text-sm text-ghost placeholder:text-ghost-dim outline-none transition-colors duration-300 focus:border-cyan/70"
+          className="w-full border border-white/15 bg-white/5 px-4 py-3 text-sm text-ghost placeholder:text-ghost-dim outline-none transition-colors duration-300 focus:border-cyan/70 focus-visible:ring-2 focus-visible:ring-cyan/70 focus-visible:ring-offset-2 focus-visible:ring-offset-void"
         />
 
         {state.error && (
