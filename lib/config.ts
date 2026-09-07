@@ -77,7 +77,7 @@ export const BUSINESS = {
   tradingAs: SITE_NAME,
   country: "Belgium",
   address: "[YOUR BUSINESS CONTACT ADDRESS — fill in before launch]",
-  contactEmail: "team@infinitvoidofficial.com",
+  contactEmail: "infinitvoidofficial@gmail.com",
   registrationNumber: "", // KBO/BCE enterprise number and/or VAT number, once registered
 } as const;
 
