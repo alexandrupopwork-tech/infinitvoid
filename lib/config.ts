@@ -73,7 +73,7 @@ export const LOGO_DIMENSIONS = { width: 679, height: 370 } as const;
  * the KBO/BCE once trading commercially, even without incorporating.
  */
 export const BUSINESS = {
-  legalName: "[YOUR FULL LEGAL NAME — fill in before launch]",
+  legalName: "INFINITVOIDOFFICIAL",
   tradingAs: SITE_NAME,
   country: "Belgium",
   address: "[YOUR BUSINESS CONTACT ADDRESS — fill in before launch]",
