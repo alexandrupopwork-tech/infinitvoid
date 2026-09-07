@@ -1,5 +1,6 @@
+import BuyBox from "@/components/BuyBox";
 import ProductCard from "@/components/ProductCard";
-import { PRODUCT } from "@/lib/config";
+import { CHECKOUT_ENABLED, PRODUCT } from "@/lib/config";
 
 export default function ProductShowcase() {
   const [front, back] = PRODUCT.images;
@@ -17,6 +18,8 @@ export default function ProductShowcase() {
       </div>
 
       <ProductCard front={front} back={back} />
+
+      {CHECKOUT_ENABLED && <BuyBox />}
     </section>
   );
 }

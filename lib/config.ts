@@ -89,6 +89,9 @@ export const SOCIALS = {
 /**
  * The first drop is a single piece. Shown as a two-angle gallery
  * (front/back) under one shared name and description.
+ *
+ * priceCents/currency and sizes are placeholders — swap them for the real
+ * numbers whenever they're confirmed, everything else reads from here.
  */
 export const PRODUCT = {
   name: "INFINITVOID Zip Hoodie",
@@ -98,4 +101,30 @@ export const PRODUCT = {
     { id: "front", label: "Front", src: IMAGES.hoodieFront },
     { id: "back", label: "Back", src: IMAGES.hoodieBack },
   ],
+  priceCents: 12000,
+  currency: "eur",
+  sizes: ["S", "M", "L", "XL"] as const,
+} as const;
+
+/**
+ * Checkout goes live for real visitors only once this is explicitly turned
+ * on (set NEXT_PUBLIC_CHECKOUT_ENABLED=true) — until then the buy button
+ * stays hidden even though the underlying flow is fully built and testable
+ * locally. The site currently reads as pre-launch/waitlist-only; flipping
+ * this on is a deliberate decision, not something to ship silently.
+ */
+export const CHECKOUT_ENABLED = process.env.NEXT_PUBLIC_CHECKOUT_ENABLED === "true";
+
+/** EU countries Stripe Checkout will collect a shipping address for. */
+export const SHIPPING_COUNTRIES = [
+  "AT", "BE", "BG", "HR", "CY", "CZ", "DK", "EE", "FI", "FR", "DE", "GR",
+  "HU", "IE", "IT", "LV", "LT", "LU", "MT", "NL", "PL", "PT", "RO", "SK",
+  "SI", "ES", "SE",
+] as const;
+
+/** Flat shipping rate shown at checkout, in cents. */
+export const SHIPPING = {
+  amountCents: 800,
+  currency: "eur",
+  label: "Standard EU shipping",
 } as const;

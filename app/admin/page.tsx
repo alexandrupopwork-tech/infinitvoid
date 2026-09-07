@@ -33,6 +33,17 @@ export default async function AdminPage() {
     .select("id, email, created_at")
     .order("created_at", { ascending: false });
 
+  const { data: orders, error: ordersError } = await supabase
+    .from("orders")
+    .select("id, email, size, amount_total, currency, status, created_at")
+    .order("created_at", { ascending: false });
+
+  function formatMoney(cents: number, currency: string) {
+    return new Intl.NumberFormat("en-IE", { style: "currency", currency: currency.toUpperCase() }).format(
+      cents / 100
+    );
+  }
+
   return (
     <div className="mx-auto max-w-4xl px-6 py-16 sm:px-10">
       <div className="mb-10 flex flex-wrap items-end justify-between gap-4">
@@ -96,6 +107,51 @@ export default async function AdminPage() {
                       </button>
                     </form>
                   </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      )}
+
+      <div className="mt-16 mb-8">
+        <h2 className="font-display text-2xl tracking-[0.1em] text-ghost sm:text-3xl">ORDERS</h2>
+        <p className="mt-1 text-sm text-ghost-dim">
+          {orders?.length ?? 0} order{orders?.length === 1 ? "" : "s"}
+        </p>
+      </div>
+
+      {ordersError && (
+        <p className="text-sm text-violet">
+          Orders table not found yet — run <code>supabase/orders.sql</code> in the Supabase SQL
+          editor to enable this section.
+        </p>
+      )}
+
+      {orders && orders.length === 0 && (
+        <p className="text-sm text-ghost-dim">No orders yet.</p>
+      )}
+
+      {orders && orders.length > 0 && (
+        <div className="overflow-x-auto border border-white/10">
+          <table className="w-full text-left text-sm">
+            <thead>
+              <tr className="border-b border-white/10 text-xs tracking-[0.15em] text-ghost-dim uppercase">
+                <th className="px-4 py-3 font-normal">Email</th>
+                <th className="px-4 py-3 font-normal">Size</th>
+                <th className="px-4 py-3 font-normal">Total</th>
+                <th className="px-4 py-3 font-normal">Status</th>
+                <th className="px-4 py-3 font-normal">Placed</th>
+              </tr>
+            </thead>
+            <tbody>
+              {orders.map((order) => (
+                <tr key={order.id} className="border-b border-white/5 last:border-0">
+                  <td className="px-4 py-3 text-ghost">{order.email}</td>
+                  <td className="px-4 py-3 text-ghost-dim">{order.size}</td>
+                  <td className="px-4 py-3 text-ghost-dim">{formatMoney(order.amount_total, order.currency)}</td>
+                  <td className="px-4 py-3 text-ghost-dim uppercase">{order.status}</td>
+                  <td className="px-4 py-3 text-ghost-dim">{formatDate(order.created_at)}</td>
                 </tr>
               ))}
             </tbody>
