@@ -70,7 +70,7 @@ export default function Hero() {
         className="flex max-w-md flex-col gap-1"
         initial={{ opacity: 0, y: 12 }}
         animate={ready ? { opacity: 1, y: 0 } : {}}
-        transition={{ duration: 0.8, ease: EASE, delay: 0.55 }}
+        transition={{ duration: 0.8, ease: EASE, delay: 1.1 }}
       >
         {justJoined ? (
           <p className="text-sm text-ghost-dim sm:text-base">{COPY.success.body}</p>
@@ -85,7 +85,7 @@ export default function Hero() {
       <motion.div
         initial={{ opacity: 0, y: 16 }}
         animate={ready ? { opacity: 1, y: 0 } : {}}
-        transition={{ duration: 0.8, ease: EASE, delay: 0.75 }}
+        transition={{ duration: 0.8, ease: EASE, delay: 1.35 }}
         className="w-full"
       >
         <WaitlistForm />
