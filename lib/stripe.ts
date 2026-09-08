@@ -9,7 +9,13 @@ export function getStripe(): Stripe {
     throw new Error("STRIPE_SECRET_KEY is not set");
   }
   if (!client) {
-    client = new Stripe(process.env.STRIPE_SECRET_KEY);
+    // Serverless functions freeze/thaw between invocations, which can leave
+    // the SDK's default Node https.Agent holding a stale keep-alive socket
+    // — that surfaces as StripeConnectionError. The fetch-based client
+    // doesn't reuse a persistent agent across invocations, avoiding it.
+    client = new Stripe(process.env.STRIPE_SECRET_KEY, {
+      httpClient: Stripe.createFetchHttpClient(),
+    });
   }
   return client;
 }
