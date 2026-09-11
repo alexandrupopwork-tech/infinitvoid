@@ -8,21 +8,24 @@ export const metadata: Metadata = {
   alternates: { canonical: `${SITE_URL}/size-guide` },
 };
 
-// Placeholder measurements in cm — replace with the real numbers once the
-// sample is measured. Chest is measured flat, pit to pit.
+// Chest is confirmed against a reference oversized zip hoodie with the same
+// relaxed fit we're going for, measured as full chest circumference (not
+// flat pit-to-pit). Length and sleeve are still placeholders — replace once
+// the real sample is measured.
 const SIZE_CHART: Record<(typeof PRODUCT.sizes)[number], { chest: number; length: number; sleeve: number }> = {
-  S: { chest: 56, length: 68, sleeve: 60 },
-  M: { chest: 59, length: 70, sleeve: 62 },
-  L: { chest: 62, length: 72, sleeve: 64 },
-  XL: { chest: 65, length: 74, sleeve: 66 },
+  S: { chest: 99, length: 68, sleeve: 60 },
+  M: { chest: 104, length: 70, sleeve: 62 },
+  L: { chest: 109, length: 72, sleeve: 64 },
+  XL: { chest: 114, length: 74, sleeve: 66 },
 };
 
 export default function SizeGuidePage() {
   return (
     <LegalPage title="Size Guide" updated="6 September 2026">
       <p>
-        Measurements below are for the {PRODUCT.name}, taken flat in centimetres. If you&rsquo;re
-        between sizes, we run true to size — size up for a roomier fit.
+        Measurements below are for the {PRODUCT.name}, in centimetres. It&rsquo;s an oversized,
+        relaxed fit — if you&rsquo;re between sizes, size down for a closer fit or stay true to
+        size for the full oversized look.
       </p>
 
       <section>
@@ -32,7 +35,7 @@ export default function SizeGuidePage() {
             <thead>
               <tr>
                 <th className="border-b border-white/15 px-3 py-2.5 text-left text-ghost">Size</th>
-                <th className="border-b border-white/15 px-3 py-2.5 text-right text-ghost">Chest (pit to pit)</th>
+                <th className="border-b border-white/15 px-3 py-2.5 text-right text-ghost">Chest</th>
                 <th className="border-b border-white/15 px-3 py-2.5 text-right text-ghost">Length</th>
                 <th className="border-b border-white/15 px-3 py-2.5 text-right text-ghost">Sleeve</th>
               </tr>
@@ -54,7 +57,7 @@ export default function SizeGuidePage() {
       <section>
         <h2>How to measure</h2>
         <ul>
-          <li><strong>Chest</strong> — lay the hoodie flat, measure straight across from one armpit to the other.</li>
+          <li><strong>Chest</strong> — wrap a tape measure around the fullest part of your chest, under your arms, keeping it level and relaxed (not pulled tight).</li>
           <li><strong>Length</strong> — from the highest point of the shoulder seam down to the hem.</li>
           <li><strong>Sleeve</strong> — from the shoulder seam to the end of the cuff.</li>
         </ul>
