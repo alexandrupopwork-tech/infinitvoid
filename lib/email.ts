@@ -24,10 +24,10 @@ function welcomeEmailHtml(): string {
     <meta name="color-scheme" content="dark" />
     <meta name="supported-color-schemes" content="dark" />
   </head>
-  <body style="margin:0;padding:0;background:#000000;">
-    <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background:#000000;">
+  <body style="margin:0;padding:0;background:#000000;" bgcolor="#000000">
+    <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background:#000000;" bgcolor="#000000">
       <tr>
-        <td align="center" style="padding:48px 20px;">
+        <td align="center" style="padding:48px 20px;" bgcolor="#000000">
           <table role="presentation" width="100%" style="max-width:480px;" cellpadding="0" cellspacing="0">
 
             <!-- top accent line -->
@@ -37,7 +37,7 @@ function welcomeEmailHtml(): string {
 
             <!-- card -->
             <tr>
-              <td style="background:#0b0b0e;border:1px solid #232328;border-top:none;padding:44px 36px 40px;">
+              <td style="background:#0b0b0e;border:1px solid #232328;border-top:none;padding:44px 36px 40px;" bgcolor="#0b0b0e">
                 <table role="presentation" width="100%" cellpadding="0" cellspacing="0">
                   <tr>
                     <td align="center" style="padding-bottom:28px;">
@@ -144,10 +144,10 @@ function orderConfirmationEmailHtml(order: OrderDetails): string {
     <meta name="color-scheme" content="dark" />
     <meta name="supported-color-schemes" content="dark" />
   </head>
-  <body style="margin:0;padding:0;background:#000000;">
-    <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background:#000000;">
+  <body style="margin:0;padding:0;background:#000000;" bgcolor="#000000">
+    <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background:#000000;" bgcolor="#000000">
       <tr>
-        <td align="center" style="padding:48px 20px;">
+        <td align="center" style="padding:48px 20px;" bgcolor="#000000">
           <table role="presentation" width="100%" style="max-width:480px;" cellpadding="0" cellspacing="0">
 
             <tr>
@@ -155,7 +155,7 @@ function orderConfirmationEmailHtml(order: OrderDetails): string {
             </tr>
 
             <tr>
-              <td style="background:#0b0b0e;border:1px solid #232328;border-top:none;padding:44px 36px 40px;">
+              <td style="background:#0b0b0e;border:1px solid #232328;border-top:none;padding:44px 36px 40px;" bgcolor="#0b0b0e">
                 <table role="presentation" width="100%" cellpadding="0" cellspacing="0">
                   <tr>
                     <td align="center" style="padding-bottom:28px;">
@@ -268,10 +268,10 @@ function shippedEmailHtml(order: ShippedOrderDetails): string {
     <meta name="color-scheme" content="dark" />
     <meta name="supported-color-schemes" content="dark" />
   </head>
-  <body style="margin:0;padding:0;background:#000000;">
-    <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background:#000000;">
+  <body style="margin:0;padding:0;background:#000000;" bgcolor="#000000">
+    <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background:#000000;" bgcolor="#000000">
       <tr>
-        <td align="center" style="padding:48px 20px;">
+        <td align="center" style="padding:48px 20px;" bgcolor="#000000">
           <table role="presentation" width="100%" style="max-width:480px;" cellpadding="0" cellspacing="0">
 
             <tr>
@@ -279,7 +279,7 @@ function shippedEmailHtml(order: ShippedOrderDetails): string {
             </tr>
 
             <tr>
-              <td style="background:#0b0b0e;border:1px solid #232328;border-top:none;padding:44px 36px 40px;">
+              <td style="background:#0b0b0e;border:1px solid #232328;border-top:none;padding:44px 36px 40px;" bgcolor="#0b0b0e">
                 <table role="presentation" width="100%" cellpadding="0" cellspacing="0">
                   <tr>
                     <td align="center" style="padding-bottom:28px;">
