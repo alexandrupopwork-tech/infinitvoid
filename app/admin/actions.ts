@@ -93,3 +93,19 @@ export async function markOrderShipped(
   revalidatePath("/admin");
   return { error: null };
 }
+
+/**
+ * Marks an order as refunded in our own records after you've issued the
+ * actual refund in the Stripe dashboard — Stripe is always the source of
+ * truth for whether money moved, this just keeps /admin in sync with it.
+ */
+export async function markOrderRefunded(orderId: string) {
+  const supabase = createSupabaseAdminClient();
+  const { error } = await supabase.from("orders").update({ status: "refunded" }).eq("id", orderId);
+
+  if (error) {
+    throw new Error("Failed to update order.");
+  }
+
+  revalidatePath("/admin");
+}

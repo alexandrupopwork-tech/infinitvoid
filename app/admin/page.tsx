@@ -4,7 +4,7 @@ import { ADMIN_COOKIE_NAME, verifySessionToken } from "@/lib/admin-auth";
 import { createSupabaseAdminClient } from "@/lib/supabase/admin";
 import LoginForm from "@/app/admin/login-form";
 import ShipOrderForm from "@/app/admin/ship-order-form";
-import { deleteSubscriber, logout } from "@/app/admin/actions";
+import { deleteSubscriber, logout, markOrderRefunded } from "@/app/admin/actions";
 
 export const metadata: Metadata = {
   title: "Admin",
@@ -152,7 +152,21 @@ export default async function AdminPage() {
                   <td className="px-4 py-3 text-ghost">{order.email}</td>
                   <td className="px-4 py-3 text-ghost-dim">{order.size}</td>
                   <td className="px-4 py-3 text-ghost-dim">{formatMoney(order.amount_total, order.currency)}</td>
-                  <td className="px-4 py-3 text-ghost-dim uppercase">{order.status}</td>
+                  <td className="px-4 py-3 text-ghost-dim uppercase">
+                    <div className="flex items-center gap-2">
+                      {order.status}
+                      {order.status !== "refunded" && (
+                        <form action={markOrderRefunded.bind(null, order.id)}>
+                          <button
+                            type="submit"
+                            className="normal-case text-[10px] tracking-[0.05em] text-ghost-dim/60 underline decoration-ghost-dim/30 underline-offset-2 transition-colors duration-300 hover:text-violet"
+                          >
+                            mark refunded
+                          </button>
+                        </form>
+                      )}
+                    </div>
+                  </td>
                   <td className="px-4 py-3 text-ghost-dim">{formatDate(order.created_at)}</td>
                   <td className="px-4 py-3 text-right">
                     {order.tracking_number ? (
