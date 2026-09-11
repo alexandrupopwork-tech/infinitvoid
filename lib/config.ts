@@ -89,9 +89,6 @@ export const SOCIALS = {
 /**
  * The first drop is a single piece. Shown as a two-angle gallery
  * (front/back) under one shared name and description.
- *
- * priceCents/currency and sizes are placeholders — swap them for the real
- * numbers whenever they're confirmed, everything else reads from here.
  */
 export const PRODUCT = {
   name: "INFINITVOID Zip Hoodie",
@@ -101,7 +98,7 @@ export const PRODUCT = {
     { id: "front", label: "Front", src: IMAGES.hoodieFront },
     { id: "back", label: "Back", src: IMAGES.hoodieBack },
   ],
-  priceCents: 12000,
+  priceCents: 8900,
   currency: "eur",
   sizes: ["S", "M", "L", "XL"] as const,
 } as const;
@@ -124,7 +121,7 @@ export const SHIPPING_COUNTRIES = [
 
 /** Flat shipping rate shown at checkout, in cents. */
 export const SHIPPING = {
-  amountCents: 800,
+  amountCents: 599,
   currency: "eur",
   label: "Standard EU shipping",
 } as const;

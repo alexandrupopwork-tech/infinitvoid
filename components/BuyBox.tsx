@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { motion } from "framer-motion";
-import { PRODUCT } from "@/lib/config";
+import { PRODUCT, SHIPPING } from "@/lib/config";
 
 const EASE = [0.16, 1, 0.3, 1] as const;
 
@@ -52,9 +52,15 @@ export default function BuyBox() {
       transition={{ duration: 0.8, ease: EASE }}
       className="mx-auto mt-16 flex w-full max-w-md flex-col items-center gap-5"
     >
-      <p className="font-display text-chrome text-2xl tracking-wide">
-        {formatPrice(PRODUCT.priceCents, PRODUCT.currency)}
-      </p>
+      <div className="flex flex-col items-center gap-1">
+        <p className="font-display text-chrome text-2xl tracking-wide">
+          {formatPrice(PRODUCT.priceCents, PRODUCT.currency)}
+        </p>
+        <p className="text-xs text-ghost-dim">
+          + {formatPrice(SHIPPING.amountCents, SHIPPING.currency)} shipping ={" "}
+          {formatPrice(PRODUCT.priceCents + SHIPPING.amountCents, PRODUCT.currency)} total
+        </p>
+      </div>
 
       <div className="flex items-center gap-2">
         {PRODUCT.sizes.map((s) => (
