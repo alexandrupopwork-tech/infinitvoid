@@ -4,6 +4,7 @@ import { cookies } from "next/headers";
 import { revalidatePath } from "next/cache";
 import { ADMIN_COOKIE_NAME, createSessionToken, verifyPassword } from "@/lib/admin-auth";
 import { createSupabaseAdminClient } from "@/lib/supabase/admin";
+import { sendShippedEmail } from "@/lib/email";
 
 export type LoginState = { error: string | null };
 
@@ -46,4 +47,49 @@ export async function deleteSubscriber(id: string) {
   }
 
   revalidatePath("/admin");
+}
+
+export type MarkShippedState = { error: string | null };
+
+export async function markOrderShipped(
+  orderId: string,
+  _prevState: MarkShippedState,
+  formData: FormData
+): Promise<MarkShippedState> {
+  const trackingNumber = formData.get("trackingNumber");
+  const trackingUrlRaw = formData.get("trackingUrl");
+
+  if (typeof trackingNumber !== "string" || trackingNumber.trim().length === 0) {
+    return { error: "Enter a tracking number." };
+  }
+
+  const trackingUrl =
+    typeof trackingUrlRaw === "string" && trackingUrlRaw.trim().length > 0 ? trackingUrlRaw.trim() : null;
+
+  const supabase = createSupabaseAdminClient();
+  const { data: order, error } = await supabase
+    .from("orders")
+    .update({
+      status: "shipped",
+      tracking_number: trackingNumber.trim(),
+      tracking_url: trackingUrl,
+      shipped_at: new Date().toISOString(),
+    })
+    .eq("id", orderId)
+    .select("email, size")
+    .single();
+
+  if (error || !order) {
+    return { error: "Failed to update order." };
+  }
+
+  await sendShippedEmail(order.email, {
+    size: order.size,
+    orderId,
+    trackingNumber: trackingNumber.trim(),
+    trackingUrl,
+  });
+
+  revalidatePath("/admin");
+  return { error: null };
 }

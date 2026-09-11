@@ -3,6 +3,7 @@ import { cookies } from "next/headers";
 import { ADMIN_COOKIE_NAME, verifySessionToken } from "@/lib/admin-auth";
 import { createSupabaseAdminClient } from "@/lib/supabase/admin";
 import LoginForm from "@/app/admin/login-form";
+import ShipOrderForm from "@/app/admin/ship-order-form";
 import { deleteSubscriber, logout } from "@/app/admin/actions";
 
 export const metadata: Metadata = {
@@ -35,7 +36,7 @@ export default async function AdminPage() {
 
   const { data: orders, error: ordersError } = await supabase
     .from("orders")
-    .select("id, email, size, amount_total, currency, status, created_at")
+    .select("id, email, size, amount_total, currency, status, tracking_number, tracking_url, created_at")
     .order("created_at", { ascending: false });
 
   function formatMoney(cents: number, currency: string) {
@@ -142,6 +143,7 @@ export default async function AdminPage() {
                 <th className="px-4 py-3 font-normal">Total</th>
                 <th className="px-4 py-3 font-normal">Status</th>
                 <th className="px-4 py-3 font-normal">Placed</th>
+                <th className="px-4 py-3 font-normal text-right">Tracking</th>
               </tr>
             </thead>
             <tbody>
@@ -152,6 +154,24 @@ export default async function AdminPage() {
                   <td className="px-4 py-3 text-ghost-dim">{formatMoney(order.amount_total, order.currency)}</td>
                   <td className="px-4 py-3 text-ghost-dim uppercase">{order.status}</td>
                   <td className="px-4 py-3 text-ghost-dim">{formatDate(order.created_at)}</td>
+                  <td className="px-4 py-3 text-right">
+                    {order.tracking_number ? (
+                      order.tracking_url ? (
+                        <a
+                          href={order.tracking_url}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="text-xs text-cyan underline decoration-cyan/40 underline-offset-2"
+                        >
+                          {order.tracking_number}
+                        </a>
+                      ) : (
+                        <span className="text-xs text-ghost-dim">{order.tracking_number}</span>
+                      )
+                    ) : (
+                      <ShipOrderForm orderId={order.id} />
+                    )}
+                  </td>
                 </tr>
               ))}
             </tbody>
