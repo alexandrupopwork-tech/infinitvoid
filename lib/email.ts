@@ -190,7 +190,7 @@ function orderConfirmationEmailHtml(order: OrderDetails): string {
                       <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="border:1px solid #232328;">
                         <tr>
                           <td style="padding:16px 18px;font-family:Arial,Helvetica,sans-serif;font-size:13px;color:#9c9ca3;">Order</td>
-                          <td align="right" style="padding:16px 18px;font-family:Arial,Helvetica,sans-serif;font-size:13px;color:#f2f2f4;">${order.orderId.slice(0, 8).toUpperCase()}</td>
+                          <td align="right" style="padding:16px 18px;font-family:Arial,Helvetica,sans-serif;font-size:13px;color:#f2f2f4;">${order.orderId.slice(-8).toUpperCase()}</td>
                         </tr>
                         <tr>
                           <td style="padding:0 18px 16px;font-family:Arial,Helvetica,sans-serif;font-size:13px;color:#9c9ca3;border-top:1px solid #1a1a1e;">Size</td>
@@ -242,7 +242,7 @@ function orderConfirmationEmailText(order: OrderDetails): string {
     `${SITE_NAME} — Order confirmed`,
     "",
     `${PRODUCT.name} — Size ${order.size}`,
-    `Order ${order.orderId.slice(0, 8).toUpperCase()}`,
+    `Order ${order.orderId.slice(-8).toUpperCase()}`,
     `Total: ${money(order.amountCents, order.currency)}`,
     "",
     "We'll email you again the moment it ships.",
@@ -313,7 +313,7 @@ function shippedEmailHtml(order: ShippedOrderDetails): string {
                       <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="border:1px solid #232328;">
                         <tr>
                           <td style="padding:16px 18px;font-family:Arial,Helvetica,sans-serif;font-size:13px;color:#9c9ca3;">Order</td>
-                          <td align="right" style="padding:16px 18px;font-family:Arial,Helvetica,sans-serif;font-size:13px;color:#f2f2f4;">${order.orderId.slice(0, 8).toUpperCase()}</td>
+                          <td align="right" style="padding:16px 18px;font-family:Arial,Helvetica,sans-serif;font-size:13px;color:#f2f2f4;">${order.orderId.slice(-8).toUpperCase()}</td>
                         </tr>
                         <tr>
                           <td style="padding:0 18px 16px;font-family:Arial,Helvetica,sans-serif;font-size:13px;color:#9c9ca3;border-top:1px solid #1a1a1e;">Tracking number</td>
@@ -361,7 +361,7 @@ function shippedEmailText(order: ShippedOrderDetails): string {
     `${SITE_NAME} — It's shipped`,
     "",
     `${PRODUCT.name} — Size ${order.size}`,
-    `Order ${order.orderId.slice(0, 8).toUpperCase()}`,
+    `Order ${order.orderId.slice(-8).toUpperCase()}`,
     `Tracking number: ${order.trackingNumber}`,
     ...(order.trackingUrl ? ["", `Track: ${order.trackingUrl}`] : []),
     "",
