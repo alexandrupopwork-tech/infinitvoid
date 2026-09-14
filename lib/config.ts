@@ -87,6 +87,17 @@ export const SOCIALS = {
 } as const;
 
 /**
+ * Auto-reply copy for the Instagram webhook (see
+ * app/api/webhooks/instagram/route.ts). Edit freely — this is the only
+ * place the wording lives, the webhook logic never hardcodes it.
+ */
+export const INSTAGRAM_AUTO_REPLY = {
+  directMessage:
+    "Thanks for reaching out to INFINITVOID. A real person will get back to you shortly — for order or sizing questions in the meantime, check infinitvoidofficial.com.",
+  comment: `Appreciate you. DM us anytime — we read everything.`,
+} as const;
+
+/**
  * The first drop is a single piece. Shown as a two-angle gallery
  * (front/back) under one shared name and description.
  */

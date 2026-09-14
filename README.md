@@ -91,6 +91,28 @@ backs out. `/api/webhooks/stripe` is an optional, more robust path for
 production (see the comment at the top of that file for how to wire it up)
 — not required for checkout to work today.
 
+## Instagram automation
+
+`/api/webhooks/instagram` auto-replies to DMs and post comments once wired
+up. It's inert until you configure it — no code change needed to activate,
+just environment variables and a Meta app:
+
+1. Connect your Instagram professional account to a Facebook Page, then
+   create a [Meta Developer app](https://developers.facebook.com/apps) and
+   add the Instagram product to it.
+2. Generate a long-lived access token for the account with the
+   `instagram_business_basic`, `instagram_business_manage_messages`, and
+   `instagram_business_manage_comments` permissions. Set it as
+   `INSTAGRAM_ACCESS_TOKEN`.
+3. Set `INSTAGRAM_APP_SECRET` (from the app's Basic Settings) and pick your
+   own `INSTAGRAM_VERIFY_TOKEN` (any random string).
+4. In the app's Webhooks config, subscribe to the `messages` and `comments`
+   fields, pointing at `<site>/api/webhooks/instagram`, using
+   `INSTAGRAM_VERIFY_TOKEN` as the verify token.
+
+Auto-reply wording lives in `INSTAGRAM_AUTO_REPLY` in `lib/config.ts` —
+edit that, not the webhook logic, to change what gets sent.
+
 ## Admin dashboard
 
 `/admin` is gated by `ADMIN_PASSWORD`. Once signed in you get the waitlist
