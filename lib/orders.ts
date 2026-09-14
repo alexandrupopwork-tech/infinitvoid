@@ -9,9 +9,16 @@ import { createSupabaseAdminClient } from "@/lib/supabase/admin";
  * never be treated as "the payment failed." Safe to call more than once
  * for the same session (stripe_session_id is unique; a duplicate insert
  * is swallowed, not treated as an error).
+ *
+ * Returns whether this call newly inserted the order (true) versus it
+ * already existed or the insert failed (false) — callers use this to
+ * decide whether to send the one-time confirmation email, since both the
+ * success page and the optional webhook can be triggered more than once
+ * for the same session (a revisited link, a Stripe webhook retry, both
+ * paths firing for the same order, ...).
  */
-export async function recordOrderFromSession(session: Stripe.Checkout.Session): Promise<void> {
-  if (session.payment_status !== "paid") return;
+export async function recordOrderFromSession(session: Stripe.Checkout.Session): Promise<boolean> {
+  if (session.payment_status !== "paid") return false;
 
   const size = session.metadata?.size ?? "unknown";
   const email = session.customer_details?.email ?? session.customer_email ?? "unknown";
@@ -30,7 +37,9 @@ export async function recordOrderFromSession(session: Stripe.Checkout.Session): 
 
   if (error) {
     // Postgres unique_violation on stripe_session_id = already recorded, fine.
-    if (error.code === "23505") return;
-    console.error("failed to record order", error);
+    if (error.code !== "23505") console.error("failed to record order", error);
+    return false;
   }
+
+  return true;
 }

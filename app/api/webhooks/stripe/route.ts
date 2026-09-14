@@ -40,10 +40,10 @@ export async function POST(request: Request) {
     const session = event.data.object;
 
     try {
-      await recordOrderFromSession(session);
+      const isNewOrder = await recordOrderFromSession(session);
 
       const email = session.customer_details?.email ?? session.customer_email;
-      if (email && session.payment_status === "paid") {
+      if (isNewOrder && email && session.payment_status === "paid") {
         await sendOrderConfirmationEmail(email, {
           size: session.metadata?.size ?? "unknown",
           amountCents: session.amount_total ?? 0,

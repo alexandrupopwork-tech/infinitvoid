@@ -43,8 +43,8 @@ export default async function CheckoutSuccessPage({
 
     if (paid) {
       after(async () => {
-        await recordOrderFromSession(session);
-        if (email) {
+        const isNewOrder = await recordOrderFromSession(session);
+        if (isNewOrder && email) {
           await sendOrderConfirmationEmail(email, { size, amountCents, currency, orderId });
         }
       });
