@@ -32,7 +32,6 @@ See `.env.example` for the full list. You need:
 - `ADMIN_PASSWORD`, `ADMIN_SESSION_SECRET` — protect `/admin`
 - `RESEND_API_KEY`, `RESEND_FROM_EMAIL` — send the waitlist confirmation email; omit both and the app still works, it just skips sending
 - `NEXT_PUBLIC_SITE_URL` — used in metadata, OpenGraph, and the sitemap
-- `NEXT_PUBLIC_LAUNCH_DATE` — optional, ISO 8601 timestamp for the countdown
 - `STRIPE_SECRET_KEY`, `NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY` — from your Stripe dashboard, see below
 - `NEXT_PUBLIC_CHECKOUT_ENABLED` — the buy button on the product section stays hidden until this is `"true"`
 

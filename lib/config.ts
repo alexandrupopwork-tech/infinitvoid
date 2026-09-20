@@ -7,13 +7,6 @@ export const TAGLINE = "Built for the void between reps.";
 
 export const TAGLINE_SUB = "Designed for those who move differently.";
 
-/**
- * ISO 8601 timestamp. Override with NEXT_PUBLIC_LAUNCH_DATE to change the
- * drop date without a code change.
- */
-export const LAUNCH_DATE =
-  process.env.NEXT_PUBLIC_LAUNCH_DATE || "2026-10-01T00:00:00-04:00";
-
 export const COPY = {
   hero: {
     headline: "ENTER THE VOID",
@@ -39,7 +32,6 @@ export const COPY = {
     eyebrow: "The First Drop",
     headline: "Once it's gone, it's gone.",
     body: "A small run, released once. No restocks planned — get in before the first wave closes.",
-    countdownLabel: "Doors open in",
   },
   firstWave: {
     eyebrow: "Join The First Wave",

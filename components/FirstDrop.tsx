@@ -1,7 +1,6 @@
 "use client";
 
 import { motion } from "framer-motion";
-import CountdownTimer from "@/components/CountdownTimer";
 import { COPY } from "@/lib/config";
 
 const EASE = [0.16, 1, 0.3, 1] as const;
@@ -27,13 +26,6 @@ export default function FirstDrop() {
         <p className="max-w-lg text-base leading-relaxed text-ghost-dim sm:text-lg">
           {COPY.firstDrop.body}
         </p>
-
-        <div className="flex flex-col items-center gap-3 pt-4">
-          <span className="text-[10px] tracking-[0.35em] text-ghost-dim uppercase">
-            {COPY.firstDrop.countdownLabel}
-          </span>
-          <CountdownTimer size="small" />
-        </div>
       </motion.div>
     </section>
   );
