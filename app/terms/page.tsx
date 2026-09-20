@@ -20,18 +20,19 @@ export default function TermsPage() {
       <section>
         <h2>1. The site, right now</h2>
         <p>
-          {SITE_URL} currently operates as a pre-launch waitlist: it lets you submit your email to
-          be notified when the first drop opens. No purchases can be made through the site yet.
-          Once checkout is enabled, the sections below on orders, pricing, and withdrawal will
-          apply to purchases.
+          {SITE_URL} is currently taking pre-orders for its first drop. Production is underway;
+          pre-orders ship as soon as it&rsquo;s complete, and we email you the moment that happens.
+          The sections below on orders, pricing, and withdrawal apply to these purchases. You can
+          also still submit your email to be notified without ordering.
         </p>
       </section>
 
       <section>
-        <h2>2. Orders and pricing (once purchases open)</h2>
+        <h2>2. Orders, pricing, and pre-orders</h2>
         <ul>
           <li>Prices are shown in the currency displayed at checkout and include applicable VAT unless stated otherwise.</li>
           <li>An order is only accepted once we confirm it by email — adding an item to a cart is not an acceptance of an offer.</li>
+          <li>Every order placed while the first drop is in production is a pre-order: payment is taken at checkout, and the item ships once production and quality checks are complete. We email you the moment your order ships.</li>
           <li>We may limit quantities per customer to keep a limited drop fair to everyone on the waitlist.</li>
           <li>If an item is listed at an incorrect price due to an error, we may cancel the order and refund you in full.</li>
         </ul>

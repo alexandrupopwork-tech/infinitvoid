@@ -53,6 +53,9 @@ export default function BuyBox() {
       className="mx-auto mt-16 flex w-full max-w-md flex-col items-center gap-5"
     >
       <div className="flex flex-col items-center gap-1">
+        <span className="mb-1 border border-cyan/40 px-3 py-1 text-[10px] tracking-[0.3em] text-cyan uppercase">
+          Pre-order
+        </span>
         <p className="font-display text-chrome text-2xl tracking-wide">
           {formatPrice(PRODUCT.priceCents, PRODUCT.currency)}
         </p>
@@ -86,7 +89,7 @@ export default function BuyBox() {
         disabled={!size || loading}
         className="w-full border border-ghost/30 bg-ghost px-7 py-4 font-display text-sm tracking-[0.15em] text-void transition-colors duration-300 hover:border-cyan focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan focus-visible:ring-offset-2 focus-visible:ring-offset-void disabled:cursor-not-allowed disabled:opacity-50"
       >
-        {loading ? "OPENING CHECKOUT…" : size ? "BUY NOW" : "SELECT A SIZE"}
+        {loading ? "OPENING CHECKOUT…" : size ? "PRE-ORDER NOW" : "SELECT A SIZE"}
       </button>
 
       {error && (
@@ -96,6 +99,7 @@ export default function BuyBox() {
       )}
 
       <p className="text-center text-xs text-ghost-dim/70">
+        This is a pre-order — payment is taken now, and we&rsquo;ll email you the moment it ships.
         Secure checkout via Stripe. Ships to the EU.{" "}
         <a href="/size-guide" className="underline decoration-ghost-dim/40 underline-offset-2 hover:text-ghost">
           Size guide

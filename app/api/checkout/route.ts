@@ -29,8 +29,8 @@ export async function POST(request: Request) {
             currency: PRODUCT.currency,
             unit_amount: PRODUCT.priceCents,
             product_data: {
-              name: `${PRODUCT.name} — Size ${size}`,
-              description: PRODUCT.description,
+              name: `${PRODUCT.name} — Size ${size} (Pre-order)`,
+              description: `${PRODUCT.description} Pre-order: you'll be emailed the moment it ships.`,
             },
           },
         },

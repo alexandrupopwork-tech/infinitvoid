@@ -165,22 +165,22 @@ function orderConfirmationEmailHtml(order: OrderDetails): string {
                   <tr>
                     <td align="center" style="padding-bottom:18px;">
                       <div style="font-family:Arial,Helvetica,sans-serif;font-size:10px;letter-spacing:5px;color:#7dfcff;text-transform:uppercase;">
-                        ✦ Order confirmed ✦
+                        ✦ Pre-order confirmed ✦
                       </div>
                     </td>
                   </tr>
                   <tr>
                     <td align="center" style="padding-bottom:20px;">
                       <div style="font-family:Georgia,'Times New Roman',serif;font-size:32px;font-weight:700;letter-spacing:1px;color:#f2f2f4;line-height:1.2;">
-                        It&rsquo;s yours.
+                        It&rsquo;s reserved.
                       </div>
                     </td>
                   </tr>
                   <tr>
                     <td align="center" style="padding-bottom:28px;">
                       <div style="font-family:Arial,Helvetica,sans-serif;font-size:15px;line-height:1.7;color:#9c9ca3;">
-                        Your ${PRODUCT.name} (Size ${order.size}) is confirmed. We&rsquo;ll email you
-                        again the moment it ships.
+                        Your ${PRODUCT.name} (Size ${order.size}) is reserved as part of the first
+                        drop. This is a pre-order — we&rsquo;ll email you the moment it ships.
                       </div>
                     </td>
                   </tr>
@@ -239,13 +239,13 @@ function orderConfirmationEmailHtml(order: OrderDetails): string {
 
 function orderConfirmationEmailText(order: OrderDetails): string {
   return [
-    `${SITE_NAME} — Order confirmed`,
+    `${SITE_NAME} — Pre-order confirmed`,
     "",
     `${PRODUCT.name} — Size ${order.size}`,
     `Order ${order.orderId.slice(-8).toUpperCase()}`,
     `Total: ${money(order.amountCents, order.currency)}`,
     "",
-    "We'll email you again the moment it ships.",
+    "This is a pre-order. We'll email you the moment it ships.",
     "",
     SITE_URL,
   ].join("\n");
@@ -393,7 +393,7 @@ export async function sendOrderConfirmationEmail(email: string, order: OrderDeta
       from: `${SITE_NAME} <${from}>`,
       to: email,
       replyTo: from,
-      subject: "Your INFINITVOID order is confirmed.",
+      subject: "Your INFINITVOID pre-order is confirmed.",
       html: orderConfirmationEmailHtml(order),
       text: orderConfirmationEmailText(order),
     });

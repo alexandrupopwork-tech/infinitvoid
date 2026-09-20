@@ -12,9 +12,9 @@ export default function RefundPolicyPage() {
   return (
     <LegalPage title="Refund Policy" updated="6 September 2026">
       <p>
-        {SITE_URL} is currently a pre-launch waitlist — no purchases can be made yet. This policy
-        describes how returns and refunds will work once the first drop opens, so it&rsquo;s clear
-        before you buy.
+        {SITE_URL} is currently taking pre-orders for its first drop — production is underway and
+        orders ship as soon as it&rsquo;s ready, with an email sent the moment that happens. This
+        policy describes how returns and refunds work for these pre-orders.
       </p>
 
       <section>
