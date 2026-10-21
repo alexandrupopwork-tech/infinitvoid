@@ -1,6 +1,6 @@
 import "server-only";
 import { Resend } from "resend";
-import { PRODUCT, SITE_NAME, SITE_URL, SOCIALS } from "@/lib/config";
+import { BUSINESS, PRODUCT, SITE_NAME, SITE_URL, SOCIALS } from "@/lib/config";
 
 let client: Resend | null = null;
 
@@ -440,6 +440,54 @@ export async function sendShippedEmail(email: string, order: ShippedOrderDetails
     }
   } catch (err) {
     console.error("resend shipped email threw", err);
+  }
+}
+
+/**
+ * Last-resort capture when the waitlist database write itself fails (e.g.
+ * Supabase paused or unreachable) — emails the lead straight to the
+ * business inbox instead of losing it, so the signup route can still tell
+ * the visitor they're in. Returns whether it actually got sent, since the
+ * caller only shows success to the visitor if the lead was captured
+ * somehow. Never throws, same rationale as the other senders here.
+ */
+export async function sendWaitlistFallbackNotice(email: string): Promise<boolean> {
+  const resend = getClient();
+  if (!resend) {
+    console.warn("RESEND_API_KEY not set — cannot send waitlist fallback notice for", email);
+    return false;
+  }
+
+  const from = process.env.RESEND_FROM_EMAIL;
+  if (!from) {
+    console.warn("RESEND_FROM_EMAIL not set — cannot send waitlist fallback notice for", email);
+    return false;
+  }
+
+  try {
+    const { error } = await resend.emails.send({
+      from: `${SITE_NAME} <${from}>`,
+      to: BUSINESS.contactEmail,
+      replyTo: from,
+      subject: "Waitlist signup — database write failed, captured as fallback",
+      text: [
+        `The waitlist database insert failed for this signup, so it was emailed here instead of saved to Supabase.`,
+        ``,
+        `Email: ${email}`,
+        `Time: ${new Date().toISOString()}`,
+        ``,
+        `Add it to the waitlist table manually once the database issue is resolved.`,
+      ].join("\n"),
+    });
+
+    if (error) {
+      console.error("waitlist fallback notice failed", error);
+      return false;
+    }
+    return true;
+  } catch (err) {
+    console.error("waitlist fallback notice threw", err);
+    return false;
   }
 }
 

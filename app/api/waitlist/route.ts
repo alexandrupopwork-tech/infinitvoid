@@ -1,7 +1,7 @@
 import { NextResponse, after } from "next/server";
 import { createSupabaseAnonServerClient } from "@/lib/supabase/anon-server";
 import { isValidEmail, normalizeEmail } from "@/lib/validate-email";
-import { sendWelcomeEmail } from "@/lib/email";
+import { sendWaitlistFallbackNotice, sendWelcomeEmail } from "@/lib/email";
 
 export async function POST(request: Request) {
   let body: unknown;
@@ -36,6 +36,17 @@ export async function POST(request: Request) {
     }
 
     console.error("waitlist insert failed", error);
+
+    // The database write itself failed (e.g. the project is paused or
+    // unreachable) — don't lose the lead over it. Email it straight to the
+    // business inbox and still tell the visitor they're in, rather than
+    // showing an error that just sends them away.
+    const captured = await sendWaitlistFallbackNotice(email);
+    if (captured) {
+      after(() => sendWelcomeEmail(email));
+      return NextResponse.json({ message: "You're officially on the list." }, { status: 201 });
+    }
+
     return NextResponse.json(
       { error: "Something went wrong. Try again in a moment." },
       { status: 500 }
