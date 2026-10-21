@@ -25,6 +25,12 @@ const maskStyle: CSSProperties = {
  * hands off to the Hero before that font has actually loaded, the headline
  * renders in a fallback font first and visibly snaps into the real one
  * mid-animation. Waiting on document.fonts.ready avoids that pop.
+ *
+ * document.fonts.ready is not guaranteed to resolve promptly — notably, it
+ * can hang indefinitely in a backgrounded or prerendered tab (e.g. a link
+ * preloaded by Instagram/TikTok's in-app browser before the user actually
+ * opens it). Without a fallback, the whole page stays invisible forever in
+ * that case. A capped wait guarantees the reveal always happens.
  */
 function useFontsReady(): boolean {
   const [ready, setReady] = useState(false);
@@ -38,8 +44,12 @@ function useFontsReady(): boolean {
     document.fonts.ready.then(() => {
       if (!cancelled) setReady(true);
     });
+    const fallback = window.setTimeout(() => {
+      if (!cancelled) setReady(true);
+    }, 2500);
     return () => {
       cancelled = true;
+      window.clearTimeout(fallback);
     };
   }, []);
 
